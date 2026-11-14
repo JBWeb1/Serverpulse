@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base
+  title="How ServerPulse is built – Astro, performance and SEO"
+  description="A short write-up of how ServerPulse was built with Astro: static HTML, one small script, and the SEO basics."
+>
+  <h1>How it's built</h1>
+  <p class="lead">
+    ServerPulse is a small project I built to learn Astro and to practise
+    web performance and SEO on something gamers would actually use.
+  </p>
+
+  <h2>Static first</h2>
+  <p>
+    Every page is generated as plain HTML at build time. The server cards come from
+    one data file, so adding a server is a one-line change. There is no UI framework
+    in the browser.
+  </p>
+
+  <h2>One small script</h2>
+  <p>
+    The only JavaScript on the site is a short file that asks the public
+    mcsrvstat.us API for each server's status and fills in the cards. If it fails,
+    the page still reads fine and the card says “No data”.
+  </p>
+
+  <h2>Performance choices</h2>
+  <ul>
+    <li>System fonts, so there is no font download.</li>
+    <li>No images apart from an SVG icon.</li>
+    <li>CSS written by hand and shipped with the page.</li>
+    <li>Layout that works from phone width up, with no horizontal scroll.</li>
+  </ul>
+
+  <h2>SEO basics</h2>
+  <ul>
+    <li>A unique title and description on every page.</li>
+    <li>Canonical URLs and Open Graph tags.</li>
+    <li>A generated sitemap and a robots.txt that points to it.</li>
+    <li>Semantic HTML: one h1 per page, labelled form fields, real landmarks.</li>
+  </ul>
+
+  <h2>Source</h2>
+  <p>
+    The code is on <a href="https://github.com/JBWeb1">my GitHub</a>.
+  </p>
+</Base>
+
+<style>
+  p, li { max-width: 65ch; }
+  ul { padding-left: 20px; }
+</style>

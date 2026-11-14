@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+import ServerCard from '../components/ServerCard.astro';
+import { servers } from '../data/servers.js';
+---
+<Base
+  title="ServerPulse – live Minecraft server status"
+  description="Check whether a Minecraft server is online, how many players are on it and which version it runs. Fast, free and no sign-up."
+>
+  <h1>Is the server up?</h1>
+  <p class="lead">
+    Live status for Minecraft servers: online or offline, player count and version.
+    Type any server address to check it.
+  </p>
+
+  <form id="lookup" class="lookup">
+    <label for="address">Server address</label>
+    <div class="row">
+      <input id="address" name="address" type="text" inputmode="url" autocomplete="off"
+        placeholder="play.example.net" required />
+      <button type="submit">Check</button>
+    </div>
+  </form>
+  <div id="results" class="grid" aria-live="polite"></div>
+
+  <h2>Popular servers</h2>
+  <div class="grid">
+    {servers.map((s) => <ServerCard {...s} />)}
+  </div>
+
+  <template id="card-template">
+    <ServerCard name="" address="" />
+  </template>
+
+  <noscript><p class="lead">Live status needs JavaScript. The rest of this site works without it.</p></noscript>
+</Base>
+
+<script>
+  import '../scripts/status.js';
+</script>
+
+<style>
+  .lookup { margin: 24px 0 16px; }
+  .lookup label { display: block; font-size: 0.9rem; color: var(--muted); margin-bottom: 6px; }
+  .row { display: flex; gap: 8px; }
+  input {
+    flex: 1; min-width: 0;
+    background: var(--panel); color: var(--text);
+    border: 1px solid var(--line); border-radius: 10px;
+    padding: 12px 14px; font: inherit;
+  }
+  button {
+    background: var(--accent); color: #062312;
+    border: 0; border-radius: 10px;
+    padding: 12px 20px; font: inherit; font-weight: 700; cursor: pointer;
+  }
+  .grid {
+    display: grid; gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+  #results:not(:empty) { margin-bottom: 8px; }
+</style>

@@ -1,0 +1,40 @@
+---
+// Rendered as plain HTML at build time. The small script in src/scripts/status.js
+// fills in the live numbers in the browser.
+const { name, address, note } = Astro.props;
+---
+<article class="card" data-server={address}>
+  <header>
+    <h3>{name}</h3>
+    <span class="pill" data-state="wait" data-field="state">Checking</span>
+  </header>
+  <p class="addr">{address}</p>
+  {note && <p class="note">{note}</p>}
+  <dl>
+    <div><dt>Players</dt><dd data-field="players">–</dd></div>
+    <div><dt>Version</dt><dd data-field="version">–</dd></div>
+  </dl>
+</article>
+
+<style is:global>
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .card header { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .card h3 { margin: 0; font-size: 1.05rem; overflow-wrap: anywhere; }
+  .addr { margin: 4px 0 0; color: var(--muted); font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.85rem; overflow-wrap: anywhere; }
+  .note { margin: 6px 0 0; color: var(--muted); font-size: 0.9rem; }
+  .card dl { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 14px 0 0; }
+  .card dt { color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .card dd { margin: 2px 0 0; font-weight: 600; overflow-wrap: anywhere; }
+  .pill {
+    font-size: 0.75rem; font-weight: 600; white-space: nowrap;
+    padding: 3px 10px; border-radius: 999px; border: 1px solid currentColor;
+  }
+  .pill[data-state='on'] { color: var(--accent); }
+  .pill[data-state='off'] { color: var(--off); }
+  .pill[data-state='wait'] { color: var(--wait); }
+</style>

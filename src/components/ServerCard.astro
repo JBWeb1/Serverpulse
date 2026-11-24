@@ -1,18 +1,20 @@
 ---
 // Rendered as plain HTML at build time. The small script in src/scripts/status.js
 // fills in the live numbers in the browser.
-const { name, address, note } = Astro.props;
+import { gameLabel } from '../data/games.js';
+const { name, address, note, game = 'minecraft' } = Astro.props;
 ---
-<article class="card" data-server={address}>
+<article class="card" data-server={address} data-game={game}>
   <header>
     <h3>{name}</h3>
     <span class="pill" data-state="wait" data-field="state">Checking</span>
   </header>
+  <p class="game" data-field="game">{gameLabel(game)}</p>
   <p class="addr">{address}</p>
   {note && <p class="note">{note}</p>}
   <dl>
     <div><dt>Players</dt><dd data-field="players">–</dd></div>
-    <div><dt>Version</dt><dd data-field="version">–</dd></div>
+    <div><dt>Version / map</dt><dd data-field="version">–</dd></div>
   </dl>
 </article>
 
@@ -25,6 +27,7 @@ const { name, address, note } = Astro.props;
   }
   .card header { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
   .card h3 { margin: 0; font-size: 1.05rem; overflow-wrap: anywhere; }
+  .game { margin: 6px 0 0; font-size: 0.75rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; }
   .addr { margin: 4px 0 0; color: var(--muted); font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.85rem; overflow-wrap: anywhere; }
   .note { margin: 6px 0 0; color: var(--muted); font-size: 0.9rem; }
   .card dl { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 14px 0 0; }
